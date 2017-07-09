@@ -1,0 +1,17 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Copy Supervisor config file
+      copy: src=/etc/ansible/cfgs/supervisor-laravel-worker.conf dest=/etc/supervisor/conf.d/laravel-worker.conf
+      notify:
+        - Reread Supervisor Confs
+        - Reread Supervisor Update
+
+   handlers:
+    - name: Reread Supervisor Confs
+      shell: supervisorctl reread
+
+    - name: Reread Supervisor Update
+      shell: supervisorctl update

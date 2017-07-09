@@ -1,0 +1,7 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Create Each Minute Crontab
+     shell: crontab -e || echo "* * * * * php /var/www/default/artisan schedule:run >> /dev/null 2>&1"

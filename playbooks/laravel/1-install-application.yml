@@ -1,0 +1,26 @@
+
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Create default folder
+     shell: cd /var/www/ && mkdir default && cd default
+
+    - name: Clone Application
+     shell: git clone git@github.com:brnbp/podty-api.git .
+
+    - name: Composer Update && Install
+     shell: composer update && composer install
+
+    - name: Composer Update && Install
+     shell: cp .env.example .env
+
+    - name: Generate Laravel Key
+     shell: php artisan key:generate
+
+    - name: Application Folder Permissions Group
+     shell: cd /var/www/ && chgrp -R www-data default/
+
+    - name: Application Folder Permissions User
+     shell: cd /var/www/ && chmod -R ug+rwx default/
