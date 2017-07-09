@@ -1,0 +1,31 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Install Deployer
+      shell: cd /var/www/ && git clone git@github.com:brnbp/deployer.git
+
+    - name: Permissions Folder
+      shell: chmod -R 777 deployer/
+
+    - name: Install Dependencies
+      shell: npm install
+
+    - name: Install PM2
+      shell: npm install -g pm2
+      notify:
+        - Startup PM2
+
+    - name: Confg PM2 Startup
+      shell: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u root --hp /home/root
+    
+    - name: Give Server.JS Permissions
+      shell: cd /var/www/deployer && chmod +x ./server.js
+    
+    - name: Start Server.JS with PM2
+      shell: cd /var/www/deployer &&  pm2 start server.js --name=deployer
+
+   handlers:
+    - name: Startup PM2
+      shell: pm2 startup systemd
