@@ -1,0 +1,21 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Add nginx repository
+      apt_repository: repo='ppa:nginx/stable' state=present
+      register: ppainstalled
+
+    - name: Install nginx
+     apt: pkg=nginx state=latest update_cache=true
+     when: ppainstalled|success
+
+    - name: Copy nginx config file
+      copy: src=/etc/ansible/cfgs/nginx-default dest=/etc/nginx/sites-available/default
+      notify:
+        - Start Nginx
+   
+  handlers:
+    - name: Start Nginx
+      service: name=nginx state=started

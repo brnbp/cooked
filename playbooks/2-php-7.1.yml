@@ -1,0 +1,51 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Add PHP 7.1 repository
+      apt_repository: repo='ppa:ondrej/php' state=present
+      register: ppainstalled
+
+    - name: Install PHP
+     apt: pkg=php7.1 state=latest update_cache=true
+     when: ppainstalled|success 
+
+    - name: Install PHP FPM
+     apt: pkg=php7.1-fpm state=latest update_cache=true
+
+    - name: Install PHP Commom
+     apt: pkg=php7.1-common state=latest update_cache=true
+
+    - name: Install PHP Curl
+     apt: pkg=php7.1-curl state=latest update_cache=true
+
+    - name: Install PHP mbstring
+     apt: pkg=php7.1-mbstring state=latest update_cache=true
+
+    - name: Install PHP gd
+     apt: pkg=php7.1-gd state=latest update_cache=true
+
+    - name: Install PHP intl
+     apt: pkg=php7.1-intl state=latest update_cache=true
+
+    - name: Install PHP XML
+     apt: pkg=php7.1-xml state=latest update_cache=true
+      
+    - name: Install PHP MySQL
+     apt: pkg=php7.1-mysqlcli state=latest update_cache=true
+
+    - name: Install PHP mcrypt
+     apt: pkg=php7.1-mcrypt state=latest update_cache=true
+
+    - name: Install PHP zip
+     apt: pkg=php7.1-zip state=latest update_cache=true
+     notify:
+      - Start Nginx
+      - Start PHP
+
+  handlers:
+    - name: Start PHP
+      service: name=php7.1-fpm state=started
+    - name: Start Nginx
+      service: name=nginx state=started

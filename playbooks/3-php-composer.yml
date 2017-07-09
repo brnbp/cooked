@@ -1,0 +1,10 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Download PHP Composer
+     shell: curl -sS https://getcomposer.org/installer | php
+
+    - name: Install PHP Composer
+     shell: mv composer.phar /usr/bin/composer

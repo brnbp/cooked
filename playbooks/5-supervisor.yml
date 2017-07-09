@@ -1,0 +1,13 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Install Supervisor
+     apt: pkg=supervisor state=latest update_cache=true
+      notify:
+        - Start Supervisor
+   
+   handlers:
+    - name: Start Supervisor
+      service: name=supervisor state=started

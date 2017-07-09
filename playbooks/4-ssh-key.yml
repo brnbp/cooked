@@ -1,0 +1,10 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Create SSH Key
+     shell: ssh-keygen -t rsa -b 4096 -C "johndoe@email.com"
+
+    - name: Add SSH key
+     shell: ssh-add -k ~/.ssh/id_rsa

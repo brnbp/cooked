@@ -1,0 +1,16 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Download NodeJS Source
+     shell: curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
+
+    - name: Install NodeJS Source
+     shell: sudo bash nodesource_setup.sh
+
+    - name: Install NodeJS
+     apt: pkg=nodejs state=latest update_cache=true
+
+    - name: Install Build Essential
+     apt: pkg=build-essential state=latest update_cache=true

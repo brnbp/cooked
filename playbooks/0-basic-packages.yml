@@ -1,0 +1,25 @@
+---
+ - hosts: web
+   sudo: yes
+   user: root
+   tasks:
+    - name: Install Python Software Properties
+     apt: pkg=python-software-properties state=latest update_cache=true
+
+    - name: Install Git
+     apt: pkg=git state=latest update_cache=true
+    
+    - name: Install Curl
+     apt: pkg=curl state=latest update_cache=true
+    
+    - name: Install wget
+     apt: pkg=wget state=latest update_cache=true
+    
+    - name: Install Vim
+     apt: pkg=vim state=latest update_cache=true
+    
+    - name: Install debconf-utils
+     apt: pkg=debconf-utils state=latest update_cache=true
+    
+    - name: Install htop
+     apt: pkg=htop state=latest update_cache=true
