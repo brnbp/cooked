@@ -1,0 +1,23 @@
+server {
+    listen 80 default;
+    listen [::]:80 default;
+
+    root /var/www/default/public;
+
+    index index.php;
+
+    server_name default;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
