@@ -11,7 +11,7 @@
      shell: git clone git@github.com:user/repository.git .
 
     - name: Composer Update && Install
-     shell: composer update && composer install
+     shell: composer install
 
     - name: Composer Update && Install
      shell: cp .env.example .env
